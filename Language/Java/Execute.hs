@@ -178,20 +178,6 @@ performBinaryOp Times     lhs rhs = performNumericalOp (*) (*) (*) (*) noCheck l
 performBinaryOp DividedBy lhs rhs = performNumericalOp div div (/) (/) checkDivisor lhs rhs
 performBinaryOp Modulus   lhs rhs = performNumericalOp mod mod mod' mod' checkDivisor lhs rhs
 
-performBinaryOp LogicalAnd (BooleanV lhs) (BooleanV rhs) = do
-  lhs2 <- unboxConversion (BooleanV lhs)
-  rhs2 <- unboxConversion (BooleanV rhs)
--- lhs2 and rhs2 are of tyep Java Value bc unboxConversion 
-  if (lhs2 == "true" && rhs2 == "true")
-    then pure (BooleanV True)
-    else pure (BooleanV False)
-
--- performBinaryOp LogicalOr (BooleanV lhs) (BooleanV rhs) = do
---   lhs2 <- unboxConversion (BooleanV lhs)
---   rhs2 <- unboxConversion (BooleanV rhs)
---   if ((makeBool lhs2) || (makeBool rhs2))
---     then pure (BooleanV True)
---     else pure (BooleanV False)
 
 
 performBinaryOp Equality (BooleanV lhs) (BooleanV rhs) = do
@@ -237,7 +223,21 @@ performBinaryOp Disequality lhs rhs = do
 performBinaryOp other _ _ = unimplementedM $ "perform " ++ show other
 
 
+performBinaryOp2 :: (Eq Value) => BinaryOperator -> Value -> Value -> Java Value
+performBinaryOp2 LogicalAnd (BooleanV lhs) (BooleanV rhs) = do
+  lhs2 <- unboxConversion (BooleanV lhs)
+  rhs2 <- unboxConversion (BooleanV rhs)
+-- lhs2 and rhs2 are of tyep Java Value bc unboxConversion 
+  if (lhs2 == (BooleanV True) && (rhs2 == BooleanV True))
+    then pure (BooleanV True)
+    else pure (BooleanV False)
 
+-- performBinaryOp LogicalOr (BooleanV lhs) (BooleanV rhs) = do
+--   lhs2 <- unboxConversion (BooleanV lhs)
+--   rhs2 <- unboxConversion (BooleanV rhs)
+--   if ((makeBool lhs2) || (makeBool rhs2))
+--     then pure (BooleanV True)
+--     else pure (BooleanV False)
 
 -- performEqualityOp Equality lhs rhs = do
 --   if (show lhs == show rhs)
