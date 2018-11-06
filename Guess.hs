@@ -33,8 +33,8 @@ guessFor target  =  do
 guessWrong :: Int -> Int -> IO ()
 guessWrong target guess = do
   if target > guess
-     then putStrLn "Too Low"
-     else putStrLn "Too high"
+     then putStrLn $ "Too Low"
+     else putStrLn $ "Too high"
   guessFor target
 
 isNum :: String -> Bool

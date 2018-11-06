@@ -52,7 +52,7 @@ loop = do
 -- | Prints welcome message
 helloWorld :: Java ()
 helloWorld = do
-  printLine $ "Welcome to the Java interpreter!! :) :)"
+  printLine $ "Welcome to the Java interpreter."
   printLine $ "Type `:?` at the prompt for the list of commands."
 
 -------------------------------------------

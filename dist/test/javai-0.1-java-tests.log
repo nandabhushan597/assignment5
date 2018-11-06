@@ -1,7 +1,7 @@
 Test suite java-tests: RUNNING...
 tests
   lexer
-    LE:      OK (0.03s)
+    LE:      OK
     Lex1:    OK
     Lex10:   OK
     Lex11:   OK
@@ -24,13 +24,57 @@ tests
     Lex9:    OK
     TypeArg: OK
   repl
-    Arith:   OK (0.02s)
+    Arith:   OK (0.03s)
+    Bool:    FAIL (0.02s)
+      Test output was different from 'tests/repl/Bool.golden'. Output of ["diff","-u","tests/repl/Bool.golden","/private/var/folders/60/84z20xj91756245hp7mdfgpw0000gn/T/Bool.golden14987-23.actual"]:
+      --- tests/repl/Bool.golden	2018-11-06 12:00:55.000000000 -0500
+      +++ /private/var/folders/60/84z20xj91756245hp7mdfgpw0000gn/T/Bool.golden14987-23.actual	2018-11-06 12:01:11.000000000 -0500
+      @@ -1,4 +1,4 @@
+      -Exit code: ExitSuccess
+      +Exit code: ExitFailure 1
+       Stdout:
+       Welcome to the Java interpreter.
+       Type `:?` at the prompt for the list of commands.
+      @@ -9,27 +9,8 @@
+       Java> true
+       Java> String is not convertible to a numeric type.
+       Java> String is not convertible to a numeric type.
+      -Java> boolean is not convertible to a numeric type.
+      -Java> true
+      -Java> true
+      -Java> false
+      -Java> true
+      -Java> Illegal operand type(s) for equality: boolean and int
+      -Java> false
+      -Java> true
+      -Java> false
+      -Java> true
+      -Java> Illegal operand type(s) for equality: <nulltype> and boolean
+      -Java> Java> true
+      -Java> false
+      -Java> true
+      -Java> true
+      -Java> ArithmeticException: / by zero
+      -Java> true
+      -Java> true
+      -Java> false
+      -Java> true
+      -Java> Illegal operand type(s) for conditional operation: int and boolean
+      -Java> Good-bye.
+      -
+      -Stderr:
+      \ No newline at end of file
+      +Java> 
+      +Stderr:
+      +javai: Panic! I thought this could never happen: Cannot do widening primitive conversion from BooleanV True to Int
+      +CallStack (from HasCallStack):
+      +  error, called at ./Language/Java/Panic.hs:19:13 in javai-0.1-BncGpsNwja619VnIR6Xin5:Language.Java.Panic
     Plus:    OK (0.02s)
-    Repl1:   OK (0.03s)
+    Repl1:   OK (0.02s)
     Repl2:   OK (0.02s)
     Repl3:   OK (0.02s)
     Repl4:   OK (0.02s)
 
-All 28 tests passed (0.26s)
-Test suite java-tests: PASS
+1 out of 29 tests failed (0.23s)
+Test suite java-tests: FAIL
 Test suite logged to: dist/test/javai-0.1-java-tests.log
