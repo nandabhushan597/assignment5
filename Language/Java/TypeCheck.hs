@@ -96,8 +96,12 @@ boolExpressionType lhs_ty rhs_ty
 
 equalityExpressionType :: Type -> Type -> Java Type
 equalityExpressionType lhs_ty rhs_ty
- | (ppr lhs_ty) == (ppr rhs_ty) = pure (PrimType Boolean)
- | otherwise = issueError $ "Not valid equailty expression (arguments not of the same type)."
+  | (isConvertibleToNumericType lhs_ty) && (isConvertibleToNumericType rhs_ty)
+  ||(isConvertibleToBoolType lhs_ty) && (isConvertibleToBoolType rhs_ty) = pure (PrimType Boolean)
+  | isConvertibleToNumericType lhs_ty == False = issueError (ppr lhs_ty ++ " is not convertible to a numeric type.")
+  | isConvertibleToNumericType rhs_ty == False = issueError (ppr rhs_ty ++ " is not convertible to a numeric type.")
+  | isConvertibleToBoolType lhs_ty == False = issueError (ppr lhs_ty ++ " is not convertible to a boolean type.")
+  | isConvertibleToBoolType rhs_ty == False = issueError (ppr rhs_ty ++ " is not convertible to a boolean type.")
 
 logicalExpressionType :: Type -> Type -> Java Type
 logicalExpressionType lhs_ty rhs_ty
