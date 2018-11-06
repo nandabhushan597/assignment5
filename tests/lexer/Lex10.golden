@@ -1,0 +1,8 @@
+Right [KeywordT IntK
+KeywordT ForK
+IdentifierT "all"
+KeywordT WhileK
+KeywordT DoK
+IdentifierT "HI"
+IdentifierT "THERE"
+IdentifierT "blah"]

@@ -1,0 +1,7 @@
+Right [LiteralT (StringL "this is a string")
+LiteralT (StringL "this is another")
+LiteralT (StringL "this string has a \" in it")
+LiteralT (StringL "This \" one \" has \" several")
+LiteralT (StringL "\b\t\\")
+LiteralT (StringL "\\\\")
+LiteralT (StringL "\\77?")]

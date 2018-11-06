@@ -1,0 +1,19 @@
+Exit code: ExitSuccess
+Stdout:
+Welcome to the Java interpreter.
+Type `:?` at the prompt for the list of commands.
+Java> 12
+Java> 120000.0
+Java> true
+Java> false
+Java> @2 => "hi there"
+Java> null
+Java> int
+Java> long
+Java> float
+Java> <nulltype>
+Java> String
+Java> char
+Java> Good-bye.
+
+Stderr:

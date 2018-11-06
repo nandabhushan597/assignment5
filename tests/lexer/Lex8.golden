@@ -1,0 +1,7 @@
+Right [OperatorT DivideO
+OperatorT TimesO
+KeywordT ThisK
+IdentifierT "is"
+IdentifierT "an"
+IdentifierT "unterminated"
+IdentifierT "comment"]

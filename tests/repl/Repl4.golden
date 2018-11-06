@@ -1,0 +1,18 @@
+Exit code: ExitSuccess
+Stdout:
+Welcome to the Java interpreter.
+Type `:?` at the prompt for the list of commands.
+Java> @2 => "hi"
+Java> @4 => "there"
+Java> @1 => char[2] { 'h', 'i' }
+@2 => String { value = @1 => char[2] { 'h', 'i' } }
+@3 => char[5] { 't', 'h', 'e', 'r', 'e' }
+@4 => String { value = @3 => char[5] { 't', 'h', 'e', 'r', 'e' } }
+Java> @2 => String { value = @1 => char[2] { 'h', 'i' } }
+Java> @2 => String { value = @1 => char[2] { 'h', 'i' } }
+Java> Heap pointer too high: 5
+Java> Heap pointer too low: 0
+Java> Unknown heap element:  garbage
+Java> Good-bye.
+
+Stderr:

@@ -1,0 +1,20 @@
+Right [KeywordT ThisK
+IdentifierT "is"
+IdentifierT "a"
+IdentifierT "file"
+IdentifierT "with"
+LiteralT (IntL 1)
+LiteralT (IntL 2)
+LiteralT (IntL 3)
+LiteralT (IntL 18)
+LiteralT (IntL 51966)
+LiteralT (IntL 51966)
+LiteralT (IntL 2748)
+LiteralT (IntL 55)
+LiteralT (LongL 17)
+LiteralT (LongL 12345)
+LiteralT (IntL 1345)
+LiteralT (IntL 27)
+LiteralT (IntL 5)
+LiteralT (IntL 10)
+IdentifierT "numbers"]

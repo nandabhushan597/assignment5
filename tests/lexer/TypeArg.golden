@@ -1,0 +1,17 @@
+Right [IdentifierT "x"
+OperatorT LessO
+IdentifierT "y"
+IdentifierT "A"
+SeparatorT LAngleBracketS
+IdentifierT "B"
+OperatorT GreaterO
+IdentifierT "a"
+SeparatorT LAngleBracketS
+IdentifierT "B"
+SeparatorT LAngleBracketS
+IdentifierT "C"
+OperatorT ShiftRightO
+IdentifierT "x"
+OperatorT LessO
+IdentifierT "B"
+OperatorT GreaterO]

@@ -1,0 +1,12 @@
+Exit code: ExitSuccess
+Stdout:
+Welcome to the Java interpreter.
+Type `:?` at the prompt for the list of commands.
+Java> |> |> 3
+Java> |> |> Java> |> |> Parsing error when list of remaining tokens starts with:
+[OperatorT DivideO,OperatorT TimesO,IdentifierT "unterminated",IdentifierT "comment"]
+Java> |> |> |> 34.0f
+Java> |> |> true
+Java> Good-bye.
+
+Stderr:

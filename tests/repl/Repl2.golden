@@ -1,0 +1,9 @@
+Exit code: ExitSuccess
+Stdout:
+Welcome to the Java interpreter.
+Type `:?` at the prompt for the list of commands.
+Java> Unexpected end of parse.
+Java> 12
+Java> Good-bye.
+
+Stderr:

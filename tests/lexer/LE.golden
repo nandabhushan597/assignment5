@@ -1,0 +1,9 @@
+Right [LiteralT (IntL 9)
+OperatorT LessEqualO
+LiteralT (IntL 10)
+LiteralT (IntL 7)
+OperatorT ShiftLeftO
+LiteralT (IntL 10)
+LiteralT (IntL 8)
+OperatorT ShiftLeftEqualO
+LiteralT (IntL 38)]

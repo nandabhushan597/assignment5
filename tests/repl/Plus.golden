@@ -1,0 +1,28 @@
+Exit code: ExitSuccess
+Stdout:
+Welcome to the Java interpreter.
+Type `:?` at the prompt for the list of commands.
+Java> Java> 7
+Java> int
+Java> 7.0
+Java> double
+Java> float
+Java> 3.6000001f
+Java> double
+Java> @4 => "hi4"
+Java> @8 => "4hi"
+Java> String
+Java> @12 => "9hi"
+Java> @18 => "4hi5"
+Java> @24 => "hi45"
+Java> <nulltype> is not convertible to a numeric type.
+Java> <nulltype> is not convertible to a numeric type.
+Java> @28 => "hinull"
+Java> @32 => "nullhi"
+Java> <nulltype> is not convertible to a numeric type.
+Java> <nulltype> is not convertible to a numeric type.
+Java> boolean is not convertible to a numeric type.
+Java> boolean is not convertible to a numeric type.
+Java> Good-bye.
+
+Stderr:

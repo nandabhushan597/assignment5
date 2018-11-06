@@ -1,0 +1,20 @@
+Exit code: ExitSuccess
+Stdout:
+Welcome to the Java interpreter.
+Type `:?` at the prompt for the list of commands.
+Java> -5
+Java> 6
+Java> 3
+Java> ArithmeticException: / by zero
+Java> Infinity
+Java> String is not convertible to a numeric type.
+Java> @6 => "4hi5"
+Java> @10 => "9hi"
+Java> String is not convertible to a numeric type.
+Java> 1
+Java> 14
+Java> 3.3333333333333335
+Java> 3.0
+Java> Java> Java> Good-bye.
+
+Stderr:

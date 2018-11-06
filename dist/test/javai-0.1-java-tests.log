@@ -1,0 +1,36 @@
+Test suite java-tests: RUNNING...
+tests
+  lexer
+    LE:      OK (0.03s)
+    Lex1:    OK
+    Lex10:   OK
+    Lex11:   OK
+    Lex12:   OK
+    Lex13:   OK
+    Lex14:   OK
+    Lex15:   OK
+    Lex16:   OK
+    Lex17:   OK
+    Lex18:   OK
+    Lex19:   OK
+    Lex2:    OK
+    Lex20:   OK
+    Lex3:    OK
+    Lex4:    OK
+    Lex5:    OK
+    Lex6:    OK
+    Lex7:    OK
+    Lex8:    OK
+    Lex9:    OK
+    TypeArg: OK
+  repl
+    Arith:   OK (0.02s)
+    Plus:    OK (0.02s)
+    Repl1:   OK (0.03s)
+    Repl2:   OK (0.02s)
+    Repl3:   OK (0.02s)
+    Repl4:   OK (0.02s)
+
+All 28 tests passed (0.26s)
+Test suite java-tests: PASS
+Test suite logged to: dist/test/javai-0.1-java-tests.log

@@ -1,0 +1,88 @@
+name:                javai
+version:             0.1
+synopsis:            A Java 8 interpreter meant for classroom use
+homepage:            gitlab.com/goldfirere/javai
+license:             BSD3
+license-file:        LICENSE
+author:              Richard Eisenberg
+maintainer:          rae@cs.brynmawr.edu
+bug-reports:         https://gitlab.com/goldfirere/javai/issues
+-- copyright:           
+category:            Language
+build-type:          Simple
+extra-source-files:  CHANGES.md
+                  ,  tests/lexer/*.java
+                  ,  tests/lexer/*.golden
+                  ,  tests/repl/*.java
+                  ,  tests/repl/*.golden
+cabal-version:       >=2.0
+description:         
+    This Java interpreter is designed to hew closely to the Java Language Specification
+    (for Java 8). No attempt, at all, is made to make this performant. It is meant to
+    be used for classroom use in an introductory class on programming languages.
+
+source-repository head
+  type:     git
+  location: https://gitlab.com/goldfirere/javai.git
+  branch:   master
+
+library
+  exposed-modules:     Language.Java.Char
+                       Language.Java.Execute
+                       Language.Java.Identifier
+                       Language.Java.Lang
+                       Language.Java.Lexer
+                       Language.Java.Literal
+                       Language.Java.Monad
+                       Language.Java.Mutate
+                       Language.Java.Panic
+                       Language.Java.Parser
+                       Language.Java.Pretty
+                       Language.Java.PrettyM
+                       Language.Java.Repl
+                       Language.Java.State
+                       Language.Java.String
+                       Language.Java.Syntax
+                       Language.Java.Token
+                       Language.Java.Type
+                       Language.Java.TypeCheck
+                       Language.Java.Value
+                      
+  -- other-modules:       
+  other-extensions:    CPP
+  build-depends:       base >=4.8 && <5
+                     , array >= 0.5
+                     , containers >= 0.5
+                     , mtl >= 2.2.2
+                     , haskeline >= 0.7.1.1
+                     , transformers >= 0.5.5
+                     , vector >= 0.12
+
+  -- hs-source-dirs:      
+  build-tools:         alex, happy
+  default-language:    Haskell2010
+  ghc-options:         -Wall
+
+executable javai
+  hs-source-dirs:      javai
+  main-is:             Main.hs
+  scope:               public
+  default-language:    Haskell2010
+
+  build-depends:       base >=4.8 && <5
+                     , javai
+
+test-suite java-tests
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      tests
+  ghc-options:         -Wall
+  default-language:    Haskell2010
+  main-is:             Main.hs
+  
+  build-depends:       base >=4.8 && <5
+                     , javai
+                     , tasty >= 1.0
+                     , tasty-golden >= 2.3.1
+                     , bytestring >= 0.10
+                     , filepath >= 1.4
+                     , process >= 1.6
