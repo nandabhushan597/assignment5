@@ -113,28 +113,38 @@ performBinaryOp Minus     lhs rhs = performNumericalOp (-) (-) (-) (-) noCheck l
 performBinaryOp Times     lhs rhs = performNumericalOp (*) (*) (*) (*) noCheck lhs rhs
 performBinaryOp DividedBy lhs rhs = performNumericalOp div div (/) (/) checkDivisor lhs rhs
 performBinaryOp Modulus   lhs rhs = performNumericalOp mod mod mod' mod' checkDivisor lhs rhs
+
+
+-- performBinaryOp :: BinaryOperator -> Value -> Value -> Java Value
+performBinaryOp Equality (ReferenceV lhs) (ReferenceV rhs) = do
+  lhs2 <- unboxConversion (ReferenceV lhs)
+  rhs2 <- unboxConversion (ReferenceV rhs)
+  if (show lhs2 == show rhs2)
+    then pure (BooleanV True)
+    else pure (BooleanV False)
+
+-- performBinaryOp :: BinaryOperator -> Value -> Value -> Java Value
+performBinaryOp Equality (BooleanV lhs) (BooleanV rhs) = do
+  lhs2 <- unboxConversion (BooleanV lhs)
+  rhs2 <- unboxConversion (BooleanV rhs)
+  if (show lhs2 == show rhs2)
+    then pure (BooleanV True)
+    else pure (BooleanV False)
+
+-- performBinaryOp :: BinaryOperator -> Value -> Value -> Java Value
+performBinaryOp Equality (CharV lhs) (CharV rhs) = do
+  if (show lhs == show rhs)
+    then pure (BooleanV True)
+    else pure (BooleanV False)
+
+performBinaryOp Equality lhs rhs = do 
+  
+
+
+
 performBinaryOp other _ _ = unimplementedM $ "perform " ++ show other
 
 
--- performBinaryOp :: BinaryOperator -> Value -> Value -> Java Value
-performEqualityOp Equality (ReferenceV lhs) (ReferenceV rhs) = do
-  lhs2 <- unboxConversion (ReferenceV lhs)
-  rhs2 <- unboxConversion (ReferenceV rhs)
-  let x = (show lhs2) == (show rhs2)
-  pure (BooleanV x)
-
-
--- performBinaryOp :: BinaryOperator -> Value -> Value -> Java Value
-performEqualityOp Equality (BooleanV lhs) (BooleanV rhs) = do
-  lhs2 <- unboxConversion (BooleanV lhs)
-  rhs2 <- unboxConversion (BooleanV rhs)
-  let x = (show lhs2) == (show rhs2)
-  pure (BooleanV x)
-
--- performBinaryOp :: BinaryOperator -> Value -> Value -> Java Value
-performEqualityOp Equality (CharV lhs) (CharV rhs) = do
-  let x = (show lhs) == (show rhs)
-  pure (BooleanV x)
 
 
 -- performEqualityOp Equality lhs rhs = do
