@@ -26,6 +26,7 @@ import Language.Java.Type
 import Language.Java.TypeCheck
 import Language.Java.Value
 
+import qualified Data.Char as Char
 import Data.Fixed  ( mod' )
 import Data.Int
 
@@ -53,6 +54,7 @@ evalExpression other = issueError $ "I don't know how to evaluate " ++ show othe
 evalBinary :: BinaryOperator -> Expression -> Expression -> Java Result
 evalBinary op lhs_expr rhs_expr = do
   -- S15.7.1 says to evaluate the left side first (at least, in the implemented cases)
+  
   lhs_res <- evalExpression lhs_expr
   rhs_res <- evalExpression rhs_expr
 
@@ -61,7 +63,64 @@ evalBinary op lhs_expr rhs_expr = do
   rhs_val <- getValue rhs_res
 
   val <- performBinaryOp op lhs_val rhs_val
+
   pure (ValueR val)
+
+-- evalBinary LogicalAnd lhs_expr rhs_expr = do 
+
+--   -- left expression  
+--   l_lhs_res <- evalExpression lhs_expr
+--   l_rhs_res <- evalExpression rhs_expr
+
+--   -- all the binary operators use values
+--   l_lhs_val <- getValue lhs_res
+--   l_rhs_val <- getValue rhs_res
+
+--   l_val <- performBinaryOp op lhs_val rhs_val
+
+--   -- right expression  
+--   r_lhs_res <- evalExpression lhs_expr
+--   r_rhs_res <- evalExpression rhs_expr
+
+--   -- all the binary operators use values
+--   r_lhs_val <- getValue lhs_res
+--   r_rhs_val <- getValue rhs_res
+
+--   r_val <- performBinaryOp op lhs_val rhs_val
+
+--   if l_val == r_val 
+
+-- evalBinary LogicalOr lhs_expr rhs_expr = do 
+
+  -- case op of 
+  --   LogicalOr -> do 
+  --     let val = (performBinaryOp op lhs_val rhs_val) || (evalExpression rhs_expr)
+  --     pure (ValueR val)
+  --   LogicalAnd -> do 
+  --     evalLeft <- evalBinary op lhs_expr rhs_expr
+  --     evalRight <- evalBinary op lhs_expr rhs_expr
+  --     let val = evalLeft && evalRight
+  --     pure (ValueR val)
+  --   otherwise -> do 
+  --     val <- performBinaryOp op lhs_val rhs_val
+  --     pure (ValueR val)
+
+  -- if (op == LogicalOr || op == LogicalAnd)
+  --   then do 
+  --     evalLeft <- performBinaryOp lhs_expr
+  --     evalRight <- performBinaryOp rhs_expr
+  --     val <- evalLeft && evalRight
+  --     pure (ValueR val)
+  --   else do 
+  --     lhs_res <- evalExpression lhs_expr
+  --     rhs_res <- evalExpression rhs_expr
+
+      -- all the binary operators use values
+      -- lhs_val <- getValue lhs_res
+      -- rhs_val <- getValue rhs_res
+
+      -- val <- performBinaryOp op lhs_val rhs_val
+      -- pure (ValueR val)
 
 {-
 Note [Detecting string concatenation]
@@ -85,6 +144,11 @@ Why not just use the type? Because that makes + to be type-directed.
 I want type-checking to be optional, so that we can experiment with
 what happens when we turn type-checking off.
 -}
+-- makeBool :: Java Value -> Bool
+-- makeBool x 
+--   | stringHtoJ x = True
+-- makeBool "false" = False
+-- makeBool _ = error "invalid string to be converted"
 
 -- | Actually compute the result of the operation (for operators with
 -- normal evaluation order)
@@ -114,33 +178,61 @@ performBinaryOp Times     lhs rhs = performNumericalOp (*) (*) (*) (*) noCheck l
 performBinaryOp DividedBy lhs rhs = performNumericalOp div div (/) (/) checkDivisor lhs rhs
 performBinaryOp Modulus   lhs rhs = performNumericalOp mod mod mod' mod' checkDivisor lhs rhs
 
+performBinaryOp LogicalAnd (BooleanV lhs) (BooleanV rhs) = do
+  lhs2 <- unboxConversion (BooleanV lhs)
+  rhs2 <- unboxConversion (BooleanV rhs)
+-- lhs2 and rhs2 are of tyep Java Value bc unboxConversion 
+  if (lhs2 == "true" && rhs2 == "true")
+    then pure (BooleanV True)
+    else pure (BooleanV False)
 
--- performBinaryOp :: BinaryOperator -> Value -> Value -> Java Value
-performBinaryOp Equality (ReferenceV lhs) (ReferenceV rhs) = do
-  lhs2 <- unboxConversion (ReferenceV lhs)
-  rhs2 <- unboxConversion (ReferenceV rhs)
-  if (show lhs2 == show rhs2)
-    then pure (BooleanV True)
-    else pure (BooleanV False)
+-- performBinaryOp LogicalOr (BooleanV lhs) (BooleanV rhs) = do
+--   lhs2 <- unboxConversion (BooleanV lhs)
+--   rhs2 <- unboxConversion (BooleanV rhs)
+--   if ((makeBool lhs2) || (makeBool rhs2))
+--     then pure (BooleanV True)
+--     else pure (BooleanV False)
 
--- performBinaryOp :: BinaryOperator -> Value -> Value -> Java Value
+
 performBinaryOp Equality (BooleanV lhs) (BooleanV rhs) = do
-  lhs2 <- unboxConversion (BooleanV lhs)
-  rhs2 <- unboxConversion (BooleanV rhs)
-  if (show lhs2 == show rhs2)
-    then pure (BooleanV True)
-    else pure (BooleanV False)
+  lhs2 <- unboxConversion (BooleanV lhs)
+  rhs2 <- unboxConversion (BooleanV rhs)
+  if (show lhs2 == show rhs2)
+    then pure (BooleanV True)
+    else pure (BooleanV False)
 
--- performBinaryOp :: BinaryOperator -> Value -> Value -> Java Value
-performBinaryOp Equality (CharV lhs) (CharV rhs) = do
-  if (show lhs == show rhs)
-    then pure (BooleanV True)
-    else pure (BooleanV False)
+performBinaryOp Equality (ReferenceV lhs) (ReferenceV rhs) = do
+  lhs2 <- unboxConversion (ReferenceV lhs)
+  rhs2 <- unboxConversion (ReferenceV rhs)
+  if (show lhs2 == show rhs2)
+    then pure (BooleanV True)
+    else pure (BooleanV False)
 
-performBinaryOp Equality lhs rhs = do 
-  
+performBinaryOp Equality lhs rhs = do
+  (lhs2, rhs2) <- binaryNumericPromotion lhs rhs
+  if (show lhs2 == show rhs2)
+    then pure (BooleanV True)
+    else pure (BooleanV False)
 
+performBinaryOp Disequality (BooleanV lhs) (BooleanV rhs) = do
+  lhs2 <- unboxConversion (BooleanV lhs)
+  rhs2 <- unboxConversion (BooleanV rhs)
+  if (show lhs2 /= show rhs2)
+    then pure (BooleanV True)
+    else pure (BooleanV False)
 
+performBinaryOp Disequality (ReferenceV lhs) (ReferenceV rhs) = do
+  lhs2 <- unboxConversion (ReferenceV lhs)
+  rhs2 <- unboxConversion (ReferenceV rhs)
+  if (show lhs2 /= show rhs2)
+    then pure (BooleanV True)
+    else pure (BooleanV False)
+
+performBinaryOp Disequality lhs rhs = do
+  (lhs2, rhs2) <- binaryNumericPromotion lhs rhs
+  if (show lhs2 /= show rhs2)
+    then pure (BooleanV True)
+    else pure (BooleanV False)
 
 performBinaryOp other _ _ = unimplementedM $ "perform " ++ show other
 
