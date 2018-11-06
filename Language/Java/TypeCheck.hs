@@ -87,8 +87,8 @@ arithmeticExpressionType lhs_ty rhs_ty = do
 
 boolExpressionType :: Type -> Type -> Java Type
 boolExpressionType lhs_ty rhs_ty
-  | (isConvertibleToNumericType lhs_ty) && (isConvertibleToNumericType rhs_ty)
-  ||(isConvertibleToBoolType lhs_ty) && (isConvertibleToBoolType rhs_ty) = pure (PrimType Boolean)
+  | (isConvertibleToNumericType lhs_ty) && (isConvertibleToNumericType rhs_ty) = pure (PrimType Boolean)
+  | (isConvertibleToBoolType rhs_ty == True && isConvertibleToBoolType rhs_ty == True) = issueError (ppr rhs_ty ++ " is not convertible to a numeric type.")
   | isConvertibleToNumericType lhs_ty == False = issueError (ppr lhs_ty ++ " is not convertible to a numeric type.")
   | isConvertibleToNumericType rhs_ty == False = issueError (ppr rhs_ty ++ " is not convertible to a numeric type.")
   | isConvertibleToBoolType lhs_ty == False = issueError (ppr lhs_ty ++ " is not convertible to a boolean type.")
