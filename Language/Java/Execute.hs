@@ -9,6 +9,8 @@
 --
 -- Execute Java statements and evaluate Java expressions
 --
+-- partner with Nanda
+-- collab with Laya, Jenny and Mikal
 ----------------------------------------------------------------------------
 
 module Language.Java.Execute ( Result(..), execStatement, evalExpression ) where
@@ -54,6 +56,30 @@ evalExpression other = issueError $ "I don't know how to evaluate " ++ show othe
 
 -- | Evaluate a binary expression
 evalBinary :: BinaryOperator -> Expression -> Expression -> Java Result
+evalBinary LogicalOr lhs_expr rhs_expr = do
+  lhs_res <- evalExpression lhs_expr
+  lhs_val <- getValue lhs_res
+
+  case lhs_val of
+    BooleanV True -> pure (ValueR lhs_val)
+    BooleanV False -> do 
+      rhs_res <- evalExpression rhs_expr
+      rhs_val <- getValue rhs_res
+      val <- performBinaryOp LogicalOr lhs_val rhs_val
+      pure (ValueR val)
+
+evalBinary LogicalAnd lhs_expr rhs_expr = do
+  lhs_res <- evalExpression lhs_expr
+  lhs_val <- getValue lhs_res
+
+  case lhs_val of
+    BooleanV False -> pure (ValueR lhs_val)
+    BooleanV True -> do 
+      rhs_res <- evalExpression rhs_expr
+      rhs_val <- getValue rhs_res
+      val <- performBinaryOp LogicalAnd lhs_val rhs_val
+      pure (ValueR val)
+  
 evalBinary op lhs_expr rhs_expr = do
   -- S15.7.1 says to evaluate the left side first (at least, in the implemented cases)
   lhs_res <- evalExpression lhs_expr
@@ -65,28 +91,6 @@ evalBinary op lhs_expr rhs_expr = do
 
   val <- performBinaryOp op lhs_val rhs_val
   pure (ValueR val)
-
-
-  -- if (op == LogicalOr && (BooleanV lhs_val) == True)
-  --   then do
-  --     val <- performBinaryOp op lhs_val lhs_val
-  --     pure (ValueR val)
-  --   else do 
-  -- val <- performBinaryOp op lhs_val rhs_val
-  -- pure (ValueR val)
-
--- evalBinary LogicalOr lhs_expr rhs_expr = do 
---   lhs_res <- evalExpression lhs_expr
---   -- rhs_res <- evalExpression rhs_expr
-
---   -- all the binary operators use values
---   lhs_val <- getValue lhs_res
---   -- rhs_val <- getValue rhs_res
-  
---   if (BooleanV lhs_val)
---     then pure (ValueR lhs_val)
---     else pure (ValueR (BooleanV False))
-
 
 {-
 Note [Detecting string concatenation]
@@ -155,7 +159,6 @@ performBinaryOp LogicalOr (BooleanV lhs) (BooleanV rhs) = do
   if (lhs || rhs)
     then pure (BooleanV True)
     else pure (BooleanV False)
-
 
 performBinaryOp Equality (BooleanV lhs) (BooleanV rhs) = do
   lhs2 <- unboxConversion (BooleanV lhs)

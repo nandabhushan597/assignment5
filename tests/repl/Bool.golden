@@ -16,7 +16,7 @@ Java> false
 Java> true
 Java> Illegal operand type(s) for equality: boolean and int
 Java> false
-Java> true
+Java> false
 Java> false
 Java> true
 Java> Illegal operand type(s) for equality: <nulltype> and boolean

@@ -1,10 +1,5 @@
 {-# LANGUAGE OverloadedLists #-}
 
--- **** NEED TO FIX IF
--- 5 == 8.0
--- should return false
-
-
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Language.Java.TypeCheck
@@ -16,6 +11,9 @@
 --
 -- A Java type checker
 --
+
+-- partner with Nanda
+-- collab with Laya, Jenny and Mikal
 ----------------------------------------------------------------------------
 
 module Language.Java.TypeCheck (
