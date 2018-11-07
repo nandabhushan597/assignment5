@@ -1,0 +1,45 @@
+8. Javai tracks Java's primitive types in its PrimitiveType type. Where is this declared? 
+PrimitiveType is declared in Type.hs  
+ 
+9. Javai tracks binary operators in its BinaryOperator type. Where is this declared? 
+Binary Operator data type is declared in Syntax.hs
+ 
+10. What is the name javai uses for the > operator? What about the && operator? (Look at what is used in Syntax.hs, not what is used in the lexer.)   
+Javai calls > operator GreaterThan and the &&  operator LogicalAnd
+ 
+11. The Language.Java.Monad module defines the Java monad. (Do not stare at its definition for very long, lest your brain explode. If you brain does explode and you wish to reassemble it, search online for monad transformers.) For our purposes, the  
+a) PutString or PutLine to printout text in the Java Monad
+b) issueError or unimplementedM to report errors to the users
+ 
+12. The javai type-checker is in the Language.Java.TypeCheck module. Line 43 handles literal expressions, like 3 or true. Why does it call pure?
+In this line typeCheckExpression (LiteralE lit) = pure (litType lit)
+pure is applied because any literal expression can have the a primitive type of int, long, float, double, Boolean, char, null type, and pure returns the values with their types.  
+Sources:
+http://andrew.gibiansky.com/blog/haskell/haskell-syntax/2
+http://learnyouahaskell.com/functors-applicative-functors-and-monoids
+ 
+13. binaryExpressionType checks the right hand and left hand sign of the expression is type String because if it is not type stringType the arithmeticExpressionType is implemented and will return a type other than a string. 
+ 
+14. checkConvertibleToNumericType checks that both the left hand and right hand side of the arithmetic expression are of type Byte, Short, Int, Long, Char, Float, Double so that an arithmetic expression can ultimately be computed on to numerals.
+ 
+15. With binary numeric promotion, converts two value types to have the same type. In the case that there is a double and another numeric type, both values will be a double. In the case that there is a float and another numeric type, both values will be a float. In the case that there is a long and another numeric type, both values will be a long. For other data types, binary numeric promotion converts value types to int.  
+ 
+In the arithmeticExpressionType function,  prim_type <- binaryNumericPromotionType lhs_ty rhs_ty this line implements binaryNumericPromotionType so that arithmetic can be performed on any numeric values. For example, this function implementing binaryNumericPromotionType allows 5 + 8.0 to output 13.
+ 
+16.
+void myFunction (Int a, Int b){ 
+System.out.println (a * b);
+}
+Suppose a or b is not given a value. This expression will evaluate to nothing.
+ 
+17. 32 bits in an a Java int  
+ 
+18. getValue  gets the value of a result. For example, getValue(BooleanV True) = True.
+ 
+19.  evalBinary evaluates both sides of a java expression and gets the values to be passed into performBinaryOp so that they can be evaluated using operations 
+ 
+20. performBinaryOp Plus  first checks if the left and right hand side of the expression is of type String. arithmeticExpressionType is implemented if neither lhs or rhs is string type. Lastly, the arithmeticExpressionType computes the type of an arithmetic expression.
+ 
+21. In performNumericalOp, panic is appropriate since it takes four operations, a checking function and panics if the paramters are not type int, long, floats, or doubles. The panic is appropriate since the function quits the program is used when a Java feature is not implemented. Issuing an error is not appropriate because the error is not caused by a user input.
+ 
+22. noCheck is checking to see if an expression is being divided or performed the modulus operation on 0. This functions throws an exception or does nothing. Pure is a success since it is equivalent to doing doing nothing since it returns the evaluated expression tagged with monad Java.
