@@ -86,6 +86,7 @@ arithmeticExpressionType lhs_ty rhs_ty = do
   pure (PrimType prim_type)
 
 boolExpressionType :: Type -> Type -> Java Type
+-- boolExpressionType _ _ = issueError ("Nothing passed into boolExpressionType")
 boolExpressionType lhs_ty rhs_ty
   | (isConvertibleToNumericType lhs_ty) && (isConvertibleToNumericType rhs_ty) = pure (PrimType Boolean)
   | (isConvertibleToBoolType rhs_ty == True && isConvertibleToBoolType rhs_ty == True) = issueError (ppr rhs_ty ++ " is not convertible to a numeric type.")
@@ -95,6 +96,7 @@ boolExpressionType lhs_ty rhs_ty
   | isConvertibleToBoolType rhs_ty == False = issueError (ppr rhs_ty ++ " is not convertible to a boolean type.")
 
 equalityExpressionType :: Type -> Type -> Java Type
+-- equalityExpressionType _ _ = issueError ("Nothing passed into equalityExpressionType")
 equalityExpressionType lhs_ty rhs_ty
   | (ppr lhs_ty) == (ppr rhs_ty) = pure (PrimType Boolean)
   | (isConvertibleToNumericType lhs_ty) && (isConvertibleToNumericType rhs_ty)
@@ -109,6 +111,7 @@ equalityExpressionType lhs_ty rhs_ty
   | isConvertibleToBoolType rhs_ty == False = issueError (ppr rhs_ty ++ " is not convertible to a boolean type.")
   
 logicalExpressionType :: Type -> Type -> Java Type
+-- logicalExpressionType _ _ = issueError ("Nothing passed into logicalExpressionType")
 logicalExpressionType lhs_ty rhs_ty
  | (ppr lhs_ty) == "boolean" && (ppr rhs_ty) == "boolean" = pure (PrimType Boolean)
  | (isConvertibleToBoolType lhs_ty) && (isConvertibleToNumericType rhs_ty) = issueError ("Illegal operand type(s) for conditional operation: boolean and int")

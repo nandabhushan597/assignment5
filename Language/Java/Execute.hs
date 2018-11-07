@@ -50,11 +50,12 @@ evalExpression (LiteralE lit) = do
   pure (ValueR value)
 evalExpression other = issueError $ "I don't know how to evaluate " ++ show other
 
+
+
 -- | Evaluate a binary expression
 evalBinary :: BinaryOperator -> Expression -> Expression -> Java Result
 evalBinary op lhs_expr rhs_expr = do
   -- S15.7.1 says to evaluate the left side first (at least, in the implemented cases)
-  
   lhs_res <- evalExpression lhs_expr
   rhs_res <- evalExpression rhs_expr
 
@@ -63,8 +64,28 @@ evalBinary op lhs_expr rhs_expr = do
   rhs_val <- getValue rhs_res
 
   val <- performBinaryOp op lhs_val rhs_val
-
   pure (ValueR val)
+
+
+  -- if (op == LogicalOr && (BooleanV lhs_val) == True)
+  --   then do
+  --     val <- performBinaryOp op lhs_val lhs_val
+  --     pure (ValueR val)
+  --   else do 
+  -- val <- performBinaryOp op lhs_val rhs_val
+  -- pure (ValueR val)
+
+-- evalBinary LogicalOr lhs_expr rhs_expr = do 
+--   lhs_res <- evalExpression lhs_expr
+--   -- rhs_res <- evalExpression rhs_expr
+
+--   -- all the binary operators use values
+--   lhs_val <- getValue lhs_res
+--   -- rhs_val <- getValue rhs_res
+  
+--   if (BooleanV lhs_val)
+--     then pure (ValueR lhs_val)
+--     else pure (ValueR (BooleanV False))
 
 
 {-
@@ -89,7 +110,6 @@ Why not just use the type? Because that makes + to be type-directed.
 I want type-checking to be optional, so that we can experiment with
 what happens when we turn type-checking off.
 -}
-
 
 -- | Actually compute the result of the operation (for operators with
 -- normal evaluation order)
